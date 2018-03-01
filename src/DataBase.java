@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 /*
 Clasa parinte care contine toate informatiile si care trebuie o singura
 data initializata
@@ -88,19 +87,21 @@ public class DataBase {
      * @param loc referinta catre o locatie
      */
     public void afiseaza_loc(Loc loc) {
-        System.out.println("Nume:" + loc.getNume());
+        System.out.println("Nume: " + loc.getNume());
         LinkedList<String> ierahie = loc.getIerahie();
         System.out.println("Adresa: " + ierahie.get(0) + "/" +
                 ierahie.get(1) + "/" + ierahie.get(2));
         System.out.println("Pret mediu: " + loc.getPret_mediu());
-        System.out.println("Lista de activitati: ");
+        System.out.printf("Lista de activitati: ");
 
         for (int i = 0; i < loc.getActivitati().size() - 1; i++) {
-            System.out.println(loc.getActivitati().get(i));
+            System.out.printf("%s, ", loc.getActivitati().get(i));
         }
 
-        System.out.println("Intervalul in care se poate vizita: " +
-                loc.getPrima_zi().toString() + " " + loc.getUltima_zi().
+        System.out.printf("%s", loc.getActivitati().get(loc.getActivitati()
+                .size() - 1));
+        System.out.println("\nIntervalul: " +
+                loc.getPrima_zi().toString() + " - " + loc.getUltima_zi().
                 toString());
 
     }
@@ -158,14 +159,20 @@ public class DataBase {
             }
         }
         /**
-         * Afisam top5
+         * Afisam top5 daca avem cel putin 5 intrari, altfem afisam cate avem
          */
-        for (int i = 0; i < 5; i++) {
+        int x;
+        if (5 > locatii.size()) {
+            x = locatii.size();
+        } else {
+            x = 5;
+        }
+        for (int i = 0; i < x; i++) {
             Loc element = locatii.peek();
             afiseaza_loc(element);
+            System.out.println();
             locatii.remove(element);
         }
-
     }
 
     /**
@@ -176,7 +183,6 @@ public class DataBase {
         /*
         Iteram prin tari, judete si orase, locatii, in cautarea de activitati
          */
-
         for (String keys1 : tari.keySet()) {
             for (String keys2 : tari.get(keys1).getJudete().keySet()) {
                 for (String keys3 : tari.get(keys1).getJudete().get(keys2).
@@ -186,7 +192,7 @@ public class DataBase {
                         Loc loc = tari.get(keys1).getJudete().get(keys2).
                                 getOrase().get(keys3).getLocuri().get(keys4);
                         if (loc.getUltima_zi().compareTo(loc.getPrima_zi())
-                                >= 10) {
+                                <= 10) {
                             for (String activitati : loc.getActivitati()) {
                                 if (activitati.equals(activitate_dorita)) {
                                     locatii.add(loc);
@@ -199,7 +205,11 @@ public class DataBase {
             }
 
         }
-        afiseaza_loc(locatii.peek());
+        if (locatii.peek() == null) {
+            System.out.println("Nu exista activitatea");
+        } else {
+            afiseaza_loc(locatii.peek());
+        }
     }
 }
 
