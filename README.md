@@ -1,6 +1,6 @@
 # Aplicatie-Backend
 Application for searching vacations.
-Deschide in raw.
+Open in raw.
 Datele se gasesc in fisierul file.in .
 
 
